@@ -96,7 +96,7 @@ _http method_: **[POST]**
 
 ```
   {
-    "username": "john",
+    "username": "jon",
     "password": "abc123"
   }
 ```
