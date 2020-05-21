@@ -15,7 +15,7 @@ server.use(cookieParser());
 server.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 server.use(express.json());
 
-server.use('/auth', userRouter);
+server.use('/', userRouter);
 server.use('/plants', auth, plantsRouter);
 
 server.get('/', (req, res, next) => {
