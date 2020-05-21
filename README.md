@@ -6,13 +6,13 @@ npm run server
 
 #### END POINTS
 
-Register a user: //register
+Register a user: /register
 http method: [POST]
 
-Login a user: //login
+Login a user: /login
 http method: [POST]
 
-plants: /auth/plants
+plants: /plants
 http method: [GET]
 
 **/--------------------------------------------/ AUTH ROUTES /-----------------------------------/**
