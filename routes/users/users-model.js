@@ -1,4 +1,5 @@
-const db = require('../../database/config');
+const db = require('../../database/knex');
+// const knex = require('./knex');
 const bcrypt = require('bcryptjs');
 
 module.exports = {

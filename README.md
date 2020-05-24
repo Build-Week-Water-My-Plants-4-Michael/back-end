@@ -7,13 +7,16 @@ npm run server
 #### END POINTS
 
 Register a user: /register
-http method: [POST]
+
+> http method: [POST]
 
 Login a user: /login
-http method: [POST]
+
+> http method: [POST]
 
 plants: /plants
-http method: [GET]
+
+> http method: [GET]
 
 **/--------------------------------------------/ AUTH ROUTES /-----------------------------------/**
 
@@ -282,7 +285,7 @@ _http method_: **[DELETE]**
     }
 ```
 
-##### 200 (ok)
+##### 404 (Not Found)
 
 ###### Example response
 

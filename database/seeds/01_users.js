@@ -23,6 +23,11 @@ exports.seed = function (knex) {
 					password: 'abc123',
 					phoneNumber: '555-867-5309',
 				},
+				{
+					username: 'Jen',
+					password: 'abc123',
+					phoneNumber: '555-867-5309',
+				},
 			]);
 		});
 };

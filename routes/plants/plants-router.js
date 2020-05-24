@@ -52,7 +52,7 @@ router.put('/:id', (req, res) => {
 		.then((plants) => {
 			if (plants) {
 				Plants.update(changes, id).then((updatedPlant) => {
-					res.json(updatedPlant);
+					res.status(201).json(updatedPlant);
 				});
 			} else {
 				res.status(404).json({ message: 'Could not find plant with given id' });
