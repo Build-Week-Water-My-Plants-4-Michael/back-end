@@ -19,7 +19,9 @@ function findById(id) {
 }
 
 function add(plant) {
-	return db('plants').insert(plant);
+	return db('plants')
+		.insert(plant)
+		.returning('id', 'nickname', 'species', 'h2oFrequency', 'image');
 }
 
 function update(changes, id) {

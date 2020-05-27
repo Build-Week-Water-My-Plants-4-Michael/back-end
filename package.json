@@ -5,7 +5,9 @@
 	"main": "index.js",
 	"scripts": {
 		"server": "nodemon -r dotenv/config index.js",
-		"start": "node index.js"
+		"start": "node index.js",
+		"dev": "nodemon",
+		"test": "(dropdb --if-exists test-waterPlants && createdb test-waterPlants) && NODE_ENV=test mocha"
 	},
 	"repository": {
 		"type": "git",
