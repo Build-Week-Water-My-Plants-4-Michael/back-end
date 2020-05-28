@@ -24,9 +24,9 @@ function authenticate() {
     //     }
     //   };
 
-    const token = req.headers.token;
+    const token = req.headers.authorization;
 
-    // console.log(token)
+    console.log(token);
 
     try {
       if (!token) {

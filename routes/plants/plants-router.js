@@ -6,7 +6,7 @@ const router = express.Router();
 
 const authMiddleware = require('../users/auth-middleware');
 
-router.get('/', authMiddleware, (req, res) => {
+router.get('/', (req, res) => {
   Plants.find()
     .then((plants) => {
       res.json(plants);

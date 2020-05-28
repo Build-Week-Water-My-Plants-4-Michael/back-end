@@ -19,7 +19,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use('/', userRouter);
-server.use('/plants', plantsRouter);
+server.use('/plants', auth, plantsRouter);
 
 server.get('/', (req, res, next) => {
   res.json({
