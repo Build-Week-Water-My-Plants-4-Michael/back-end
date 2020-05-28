@@ -20,7 +20,7 @@ function findBy(filter) {
 }
 
 function findById(id) {
-  return db('users').where({ id }).first('id', 'username', 'accountType');
+  return db('users').where({ id }).first('id', 'username', 'phoneNumber');
 }
 
 function userById(id) {
