@@ -6,7 +6,7 @@ const helmet = require('helmet');
 
 const plantsRouter = require('../routes/plants/plants-router');
 const userRouter = require('../routes/users/users-router');
-const auth = require('../routes/users/auth-middleware');
+const authenticate = require('../routes/users/auth-middleware');
 
 const server = express();
 
@@ -19,7 +19,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use('/', userRouter);
-server.use('/plants', auth, plantsRouter);
+server.use('/plants', authenticate, plantsRouter);
 
 server.get('/', (req, res, next) => {
   res.json({
