@@ -24,11 +24,14 @@ function authenticate() {
     //     }
     //   };
 
-    const token = req.body.token;
+    const token = req.headers.token;
 
     // console.log(token)
 
     try {
+      if (!token) {
+        return res.status(401).json(authErr);
+      }
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.decoded = decoded;
       // console.log(decoded);
