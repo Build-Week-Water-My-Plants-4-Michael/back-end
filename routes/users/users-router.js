@@ -60,7 +60,7 @@ router.post('/login', validateUsername, async (req, res, next) => {
     // });
 
     const token = generateToken(user);
-    const userInfo = await users.findById(user.id).first();
+    const userInfo = await Users.findById(user.id).first();
     res.status(200).json({
       token: token,
       user: userInfo,
