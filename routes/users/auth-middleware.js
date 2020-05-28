@@ -29,7 +29,7 @@ function authenticate() {
     // console.log(token)
 
     try {
-      const decoded = jwt.verify(token, secrets.jwtSecret);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.decoded = decoded;
       // console.log(decoded);
       next();
