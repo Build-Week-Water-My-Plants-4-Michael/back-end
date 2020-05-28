@@ -45,18 +45,25 @@ router.post('/login', validateUsername, async (req, res, next) => {
       return res.status(401).json(authError);
     }
 
-    const tokenPayload = {
-      userId: user.id,
-      username: user.username,
-      phoneNumber: user.phoneNumber,
-    };
+    // const tokenPayload = {
+    // 	userId: user.id,
+    // 	username: user.username,
+    // 	phoneNumber: user.phoneNumber,
+    // };
 
-    const token = jwt.sign(tokenPayload, process.env.JWT_SECRET);
-    res.body('token', token);
+    // const token = jwt.sign(tokenPayload, process.env.JWT_SECRET);
+    // res.cookie('token', token);
 
-    res.json({
-      message: `Welcome, ${user.username}!`,
+    // res.json({
+    // 	message: `Welcome, ${user.username}!`,
+    // 	token: token,
+    // });
+
+    const token = generateToken(user);
+    const userInfo = await users.findById(user.id).first();
+    res.status(200).json({
       token: token,
+      user: userInfo,
     });
   } catch (err) {
     next(err);
@@ -78,6 +85,20 @@ async function validateUsername(req, res, next) {
   } catch (err) {
     next(err);
   }
+}
+
+function generateToken(user) {
+  const payload = {
+    userId: user.id,
+    username: user.username,
+    phoneNumber: user.phoneNumber,
+  };
+
+  const options = {
+    expiresIn: '24h',
+  };
+
+  return jwt.sign(payload, process.env.JWT_SECRET, options);
 }
 
 module.exports = router;
