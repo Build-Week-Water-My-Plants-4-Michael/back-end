@@ -6,8 +6,9 @@ function authenticate() {
 			message: 'You shall not pass!',
 		};
 		try {
-			const token = req.headers.token;
-			console.log(req.headers.token);
+			// const token = req.cookies.token;
+			const token = req.headers.authorization;
+			console.log(req.headers.authorization);
 			if (!token) {
 				return res.status(401).json(authErr);
 			}
