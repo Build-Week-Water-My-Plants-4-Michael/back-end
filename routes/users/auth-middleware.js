@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 function authenticate() {
   return async (req, res, next) => {
     const authErr = {
-      message: 'Authentication error, please try again.',
+      message: 'You shall not pass!',
     };
     try {
       const token = req.cookies.token;

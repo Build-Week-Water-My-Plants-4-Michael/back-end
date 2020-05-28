@@ -6,7 +6,6 @@ const router = require('express').Router();
 const authenticate = require('./auth-middleware');
 const plantsRoute = require('../plants/plants-router');
 router.use('/plants', authenticate(), plantsRoute);
-const secrets = require('../../config/secrets');
 
 router.post('/register', async (req, res, next) => {
   try {
@@ -46,25 +45,18 @@ router.post('/login', validateUsername, async (req, res, next) => {
       return res.status(401).json(authError);
     }
 
-    // const tokenPayload = {
-    // 	userId: user.id,
-    // 	username: user.username,
-    // 	phoneNumber: user.phoneNumber,
-    // };
+    const tokenPayload = {
+      userId: user.id,
+      username: user.username,
+      phoneNumber: user.phoneNumber,
+    };
 
-    // const token = jwt.sign(tokenPayload, process.env.JWT_SECRET);
-    // res.cookie('token', token);
+    const token = jwt.sign(tokenPayload, process.env.JWT_SECRET);
+    res.cookie('token', token);
 
-    // res.json({
-    // 	message: `Welcome, ${user.username}!`,
-    // 	token: token,
-    // });
-
-    const token = generateToken(user);
-    const userInfo = await Users.findById(user.id).first();
-    res.status(200).json({
+    res.json({
+      message: `Welcome, ${user.username}!`,
       token: token,
-      user: userInfo,
     });
   } catch (err) {
     next(err);
@@ -86,20 +78,6 @@ async function validateUsername(req, res, next) {
   } catch (err) {
     next(err);
   }
-}
-
-function generateToken(user) {
-  const payload = {
-    userId: user.id,
-    username: user.username,
-    phoneNumber: user.phoneNumber,
-  };
-
-  const options = {
-    expiresIn: '24h',
-  };
-
-  return res.cookie('token', jwt.sign(tokenPayload, process.env.JWT_SECRET));
 }
 
 module.exports = router;
