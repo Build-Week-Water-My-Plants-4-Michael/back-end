@@ -1,26 +1,27 @@
 const jwt = require('jsonwebtoken');
-const secrets = require('../../config/secrets.js');
 
 function authenticate() {
   return async (req, res, next) => {
     const authErr = {
-      message: 'You shall not pass!',
+      message: 'Authentication error, please try again.',
     };
-
     try {
-      const token = req.body.token;
-      console.log('check token', token);
-
+      const token = req.cookies.token;
+      console.log(req.cookies.token);
       if (!token) {
         return res.status(401).json(authErr);
       }
-      const decoded = jwt.verify(token, secrets.jwtSecret);
-      req.decoded = decoded;
-      // console.log(decoded);
-      next();
+      jwt.verify(token, process.env.JWT_SECRET, (err, decodedPayload) => {
+        if (err) {
+          return res.status(401).json(authErr);
+        }
+        req.token = decodedPayload;
+        next();
+      });
     } catch (err) {
-      res.status(401).json(authErr);
+      next(err);
     }
   };
 }
+
 module.exports = authenticate;
