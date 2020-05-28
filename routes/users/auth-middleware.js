@@ -2,9 +2,6 @@ const jwt = require('jsonwebtoken');
 
 function authenticate() {
   return async (req, res, next) => {
-    //     const authErr = {
-    //       message: 'You shall not pass!',
-    //     };
     //     try {
     //       const token = req.body.token;
     //       // const token = req.headers.authorization;
@@ -24,11 +21,14 @@ function authenticate() {
     //     }
     //   };
 
-    const token = req.body.token;
-
-    console.log('check token', token);
+    const authErr = {
+      message: 'You shall not pass!',
+    };
 
     try {
+      const token = req.body.token;
+      console.log('check token', token);
+
       if (!token) {
         return res.status(401).json(authErr);
       }
