@@ -1,26 +1,8 @@
 const jwt = require('jsonwebtoken');
+// const secrets = require('../../config/secret.js')
 
 function authenticate() {
   return async (req, res, next) => {
-    //     try {
-    //       const token = req.body.token;
-    //       // const token = req.headers.authorization;
-    //       // console.log(req.headers.authorization);
-    //       if (!token) {
-    //         return res.status(401).json(authErr);
-    //       }
-    //       jwt.verify(token, process.env.JWT_SECRET, (err, decodedPayload) => {
-    //         if (err) {
-    //           return res.status(401).json(authErr);
-    //         }
-    //         req.token = decodedPayload;
-    //         next();
-    //       });
-    //     } catch (err) {
-    //       next(err);
-    //     }
-    //   };
-
     const authErr = {
       message: 'You shall not pass!',
     };
@@ -37,7 +19,7 @@ function authenticate() {
       // console.log(decoded);
       next();
     } catch (err) {
-      res.status(401).json({ message: 'You shall not pass!' });
+      res.status(401).json(authErr);
     }
   };
 }

@@ -6,6 +6,7 @@ const router = require('express').Router();
 const authenticate = require('./auth-middleware');
 const plantsRoute = require('../plants/plants-router');
 router.use('/plants', authenticate(), plantsRoute);
+const secrets = require('../../config/secrets');
 
 router.post('/register', async (req, res, next) => {
   try {
