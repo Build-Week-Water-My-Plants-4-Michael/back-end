@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-// const secrets = require('../../config/secret.js')
+const secrets = require('../../config/secret.js');
 
 function authenticate() {
   return async (req, res, next) => {
@@ -14,7 +14,7 @@ function authenticate() {
       if (!token) {
         return res.status(401).json(authErr);
       }
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, secrets.jwtSecret);
       req.decoded = decoded;
       // console.log(decoded);
       next();
