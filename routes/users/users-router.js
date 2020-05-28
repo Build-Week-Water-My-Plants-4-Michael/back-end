@@ -99,7 +99,7 @@ function generateToken(user) {
     expiresIn: '24h',
   };
 
-  eturn jwt.sign(payload, secrets.jwtSecret, options)
+  return jwt.sign(payload, secrets.jwtSecret, options);
 }
 
 module.exports = router;
