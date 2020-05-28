@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 module.exports = {
   findUser,
   findBy,
+  findById,
   userById,
   findUserBy,
   addUser,
@@ -16,6 +17,10 @@ function findUser() {
 
 function findBy(filter) {
   return db('users').where(filter).first('id', 'username', 'password');
+}
+
+function findById(id) {
+  return db('users').where({ id }).first('id', 'username', 'accountType');
 }
 
 function userById(id) {
