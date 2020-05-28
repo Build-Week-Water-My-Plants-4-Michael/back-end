@@ -24,7 +24,7 @@ function authenticate() {
     //     }
     //   };
 
-    const token = req.headers.token;
+    const token = req.body.token;
 
     // console.log(token)
 
