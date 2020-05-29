@@ -1,9 +1,15 @@
+process.env.NODE_ENV = 'test';
+
 const request = require('supertest');
 const expect = require('chai').expect;
 const knex = require('../database/knex');
+var assert = require('assert');
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
 
 const app = require('../api/server');
 const fixtures = require('./fixtures');
+var loginController = require('./login.controller');
 
 // LOGIN //
 describe('Login API', function () {
@@ -83,8 +89,6 @@ describe('Plants', () => {
 					expect({ message: 'You shall not pass!' }).to.be.a('object');
 				})
 		);
-
-		// done();
 	});
 
 	// GET a plant by id
@@ -95,10 +99,7 @@ describe('Plants', () => {
 
 			.expect('Content-Type', /json/)
 			.expect(401);
-		// .then((response) => {
-		// 	expect(response.body).to.be.a('object');
-		// 	expect(response.body).to.deep.equal(fixtures.plants[1]);
-		// });
+
 		done();
 	});
 
@@ -115,10 +116,7 @@ describe('Plants', () => {
 			})
 			.expect('Content-Type', /json/)
 			.expect(200);
-		// .then((response) => {
-		// 	expect(response.body).to.be.a('object');
-		// 	expect(response.body).to.deep.equal(fixtures.plants[1]);
-		// });
+
 		done();
 	});
 	// UPDATE a plant
@@ -134,10 +132,7 @@ describe('Plants', () => {
 			})
 			.expect('Content-Type', /json/)
 			.expect(200);
-		// .then((response) => {
-		// 	expect(response.body).to.be.a('object');
-		// 	expect(response.body).to.deep.equal(fixtures.plants[1]);
-		// });
+
 		done();
 	});
 
@@ -145,5 +140,75 @@ describe('Plants', () => {
 	it('Deletes plant', (done) => {
 		request(app).delete('/plants/2').expect(200);
 		done();
+	});
+});
+
+// TEST USER LOGIN
+
+chai.use(chaiAsPromised).should();
+beforeEach('Setting up the userList', function () {
+	console.log('beforeEach');
+	loginController.loadUserList(['john', 'jane']);
+});
+describe('LoginController', function () {
+	describe('isValidUserId', function () {
+		it('should return true if valid user id', function () {
+			var isValid = loginController.isValidUserId('john');
+			//assert.equal(isValid, true);
+			expect(isValid).to.be.true;
+		});
+
+		it('should return false if invalid user id', function () {
+			var isValid = loginController.isValidUserId('jane1');
+			//assert.equal(isValid, false);
+			isValid.should.equal(false);
+		});
+	});
+});
+
+// TEST VALID USER ID
+describe('isValidUserIdAsync', function () {
+	it('should return true if valid user id', function (done) {
+		loginController.isValidUserIdAsync('john', function (isValid) {
+			//assert.equal(isValid, true);
+			isValid.should.equal(true);
+			done();
+		});
+	});
+});
+
+describe('isAuthorizedPromise', function () {
+	it('should return true if valid user id', function () {
+		return loginController.isAuthorizedPromise('jane').should.eventually.be
+			.true;
+	});
+});
+
+beforeEach('Setting up the userList', function () {
+	console.log('beforeEach');
+	loginController.loadUserList(['jane', 'john']);
+	//throw {error: 'Thrwoing Error to fail'}
+});
+
+describe('LoginController', function () {
+	describe('isValidUserId', function () {
+		it('should return true if valid user id', function () {
+			var isValid = loginController.isValidUserId('john');
+			assert.equal(isValid, true);
+		});
+
+		it('should return false if invalid user id', function () {
+			var isValid = loginController.isValidUserId('jack');
+			assert.equal(isValid, false);
+		});
+	});
+
+	describe('isValidUserIdAsync', function () {
+		it('should return true if valid user id', function (done) {
+			loginController.isValidUserIdAsync('jane', function (isValid) {
+				assert.equal(isValid, true);
+				done();
+			});
+		});
 	});
 });
